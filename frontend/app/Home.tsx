@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-export default function HomePage() {
+export default function HomeScreen() {
   return (
     <SafeAreaProvider style={styles.MainPage}>
       <SafeAreaView>

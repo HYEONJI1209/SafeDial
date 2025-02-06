@@ -1,35 +1,34 @@
 import React, { useEffect } from 'react';
-import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { createStackNavigator } from '@react-navigation/stack';
 import LandingScreen from './Landing';
+import HomeScreen from './Home';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
+export default function App() {
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+    const prepare = async () => {
+      await SplashScreen.preventAutoHideAsync();
+      setTimeout(() => {
+        SplashScreen.hideAsync();  // SplashScreen을 숨기도록 설정
+      }, 2000);
+    };
+    prepare();
+  }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <LandingScreen />
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack.Navigator initialRouteName="Landing">
+      <Stack.Screen
+        name="Landing"
+        component={LandingScreen}
+        options={{ headerShown: false }} // 헤더 숨기기
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }
