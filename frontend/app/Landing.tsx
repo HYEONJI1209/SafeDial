@@ -11,7 +11,7 @@ export default function LandingScreen() {
 
   // 버튼 클릭 시 Home 화면으로 이동
   const navigateToHome = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Regis');
   };
 
   return (

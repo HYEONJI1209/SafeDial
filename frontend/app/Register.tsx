@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import {RegisServices} from "../services/RegisServices";
 
 export default function RegisScreen() {
     const [name, setName] = useState('');
@@ -8,10 +9,25 @@ export default function RegisScreen() {
     const [secondPhone, setSecondPhone] = useState('');
     const [carNumber, setCarNumber] = useState('');
 
+    const handleRegister = async () => {
+        const formData = { name, phone, secondPhone, carNumber };
+        // console.log("📦 보낼 데이터:", formData); 
+
+        try {
+            await RegisServices(formData);
+            // console.log("📦 보낼 데이터:", formData); 
+            Alert.alert("성공", "등록이 완료되었습니다!");
+        } catch (error) {
+            Alert.alert("실패", "등록에 실패했습니다.");
+            console.log(error);
+            
+        }
+    };
+
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.MainPage}>
-                <Text style={styles.MainPageText}>203어 1234 QR정보</Text>
+                <Text style={styles.MainPageText}>정보 등록</Text>
 
                 {/* 이름 */}
                 <TextInput
@@ -47,7 +63,7 @@ export default function RegisScreen() {
                     placeholder="차량번호"
                 />
 
-                <Button title="QR생성" color="#C4D3DF" onPress={() => console.log('수정 버튼 클릭')} />
+                <Button title="QR생성" color="#C4D3DF" onPress={handleRegister} />
             </SafeAreaView>
         </SafeAreaProvider>
     );
