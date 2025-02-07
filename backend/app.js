@@ -3,11 +3,33 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
 
-var app = express();
+// Pug 설정
+app.set('views', path.join(__dirname, 'views')); // views 디렉토리 경로 설정
+app.set('view engine', 'pug'); // Pug를 템플릿 엔진으로 설정
+app.engine('pug', require('pug').__express)
+
+// CORS 설정
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+
+// 데이터베이스 동기화
+const database = require("./lib/Model");
+
+database.Node_db
+  .sync({ force: false })
+  .then(() => {
+    console.log("Node_db synchronized successfully.");
+  })
+  .catch((error) => {
+    console.error("Failed to synchronize Node_db:", error);
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,21 +41,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// catch 404 and forward to error handler
+// 라우터 파일을 가져옵니다.
+require('./lib/routes/Register')(app);
+
+// 404 에러 핸들링
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// 에러 핸들링
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
