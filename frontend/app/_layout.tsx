@@ -3,6 +3,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { createStackNavigator } from '@react-navigation/stack';
 import LandingScreen from './Landing';
 import HomeScreen from './Home';
+import DetailScreen from "./Detail";
+import RegisScreen from "./Register";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +29,16 @@ export default function App() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Regis"
+        component={RegisScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

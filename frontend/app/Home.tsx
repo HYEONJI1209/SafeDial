@@ -2,13 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import {RootStackParamList} from "../components/Type";
 
 export default function HomeScreen() {
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  
+    // 버튼 클릭 시 Home 화면으로 이동
+    const navigateToDetail = () => {
+      navigation.navigate('Detail');
+    };
+  
   return (
     <SafeAreaProvider style={styles.MainPage}>
       <SafeAreaView>
         <View>
-          <Text style={styles.MainPageText}>203어 1234 차주님</Text>
+          <Text style={styles.MainPageText}>
+            <Text onPress={navigateToDetail}>203어 1234</Text>
+            차주님</Text>
           <Text style={styles.MainPageText}>안녕하세요!</Text>
         </View>
 
