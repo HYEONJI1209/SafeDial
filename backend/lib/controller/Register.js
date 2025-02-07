@@ -1,16 +1,18 @@
 const database = require("../Model");
-const signUp = database.SignUpDB;
+const signUp = database.RegisterDB;
 const bcrypt = require('bcrypt');
 
 const SignUpController = async (req, res) => {
-        const userData = {
-        userID: req.body.userID,
-        userPW: bcrypt.hashSync(req.body.userPW, 10),
-        userEmail: req.body.userEmail,
-        pickSong: ""
+    console.log(req.body);
+    
+        const formData = {
+            name: req.body.name,
+            phone: req.body.phone,
+            secondPhone: req.body.secondPhone,
+            carNumber: req.body.carNumber
     }
 
-    signUp.create(userData)
+    signUp.create(formData)
     .then(data => {
         if (data != null) {
             res.send({ data: data, message: "SUCCESS" });

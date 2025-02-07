@@ -15,9 +15,10 @@ app.engine('pug', require('pug').__express)
 
 // CORS 설정
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "*",
   credentials: true,
 }));
+
 
 // 데이터베이스 동기화
 const database = require("./lib/Model");
@@ -46,7 +47,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // 라우터 파일을 가져옵니다.
-require('./lib/routes/Register')(app);
+require('./lib/routes/RegisRoute')(app);
 
 // 404 에러 핸들링
 app.use(function(req, res, next) {

@@ -1,21 +1,21 @@
 module.exports = (sequelize, Sequelize) => {
     const SignUp = sequelize.define("QRRegister", {
-        userID: {
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        phone: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        secondPhone: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        carNumber:{
             type: Sequelize.STRING,
             allowNull: false,
             primaryKey: true
-        },
-        userPW: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        userEmail: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        pickSong:{
-            type: Sequelize.JSON,
-            allowNull: false,
         }
     }, {
         freezeTableName: true
